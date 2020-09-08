@@ -1,0 +1,21 @@
+<html>
+
+<head>
+    <script src="app.js"></script>
+    <link rel="stylesheet" type="text/css" href="style.css" />
+</head>
+
+<body onload="onLoad()">
+<form id="searchform">
+
+    <input id="search" />
+    <br />
+    <label for="begin">Begins by</label><input type="radio" id="begin" name="Selection" value="begin" checked>
+    <label for="inclusion">Includes</label><input type="radio" id="inclusion" name="Selection" value="include"><label for="Distribution">Distribution</label><input type="radio" id="distribution" name="Selection" value="distribution">
+    <br />
+    <button type="button" onclick="onTextSearch()">Search</button>
+</form>
+<div style="margin:5px auto; width:50%;" id="res" />
+</body>
+
+</html>
