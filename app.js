@@ -96,7 +96,7 @@ function getListByText(str)
                          if (c.image != '')
                             fragment += "<img width='250px' src='" + c.image + "'/>";
                          else
-                             fragment += "<img src='Noimage.png'/>";
+                             fragment += "<img src='/okfnfr/Noimage.png'/>";
 
                          fragment += "</td>";
 
@@ -170,7 +170,7 @@ function getListByTextBegin(str)
                          if (c.image != '')
                             fragment += "<img width='250px' src='" + c.image + "'/>";
                          else
-                             fragment += "<img src='Noimage.png'/>";
+                             fragment += "<img src='/okfnfr/Noimage.png'/>";
 
                          fragment += "</td>";
 
