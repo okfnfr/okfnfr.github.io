@@ -7,12 +7,17 @@
 </head>
 
 <body onload="onLoad()">
+    
+    <h3>Lancer une recherche d'espèce :</h3>
+    
+    
 <form id="searchform">
-
+    <textarea placeholder="Entrez le nom d'une plante ou d'un animal"></textarea>
     <input id="search" />
     <br />
-    <label for="begin">Begins by</label><input type="radio" id="begin" name="Selection" value="begin" checked>
-    <label for="inclusion">Includes</label><input type="radio" id="inclusion" name="Selection" value="include"><label for="Distribution">Distribution</label><input type="radio" id="distribution" name="Selection" value="distribution">
+    <p>Options de recherche : </p>
+    <label for="begin"> qui commence avec</label><input type="radio" id="begin" name="Selection" value="begin" checked>
+    <label for="inclusion">Inclut le terme</label><input type="radio" id="inclusion" name="Selection" value="include"><label for="Distribution">Par pays/région</label><input type="radio" id="distribution" name="Selection" value="distribution">
     <br />
     <button type="button" onclick="onTextSearch()">Search</button>
 </form>
