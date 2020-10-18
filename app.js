@@ -3,18 +3,28 @@ function onTextSearch()
     document.getElementById("res").innerHTML = "";
 
     valkey = document.getElementById("search").value;
-    console.log(valkey)
-    if (valkey == '')
-        return;
+    valcountry = document.getElementById("countries").value;
+
+    //console.log(valkey)
+    //if (valkey == '')
+    //    return;
 
     binclude = document.getElementById("inclusion").checked
-    console.log(binclude)
+    bbegin = document.getElementById("begin").checked
+    bbcountry = document.getElementById("distribution").checked
+    
+    //console.log(binclude)
     list = {}
+
+    console.log(bbcountry);
+    console.log(valcountry);
 
     if (binclude == true)
         getListByText(valkey);
-    else
-        getListByTextBegin(valkey);
+    else if (bbegin == true)
+        getListByTextBegin(valkey);  
+    else if (bbcountry == true)
+        getListByDistribution(valcountry);        
 }
 
 
@@ -33,7 +43,7 @@ function getcountries()
                 response.json().then(function (data) {
                     //console.log(data.response);
                     var list = JSON.parse(data.response);
-                    console.log(list);
+                    //console.log(list);
                     var countries = document.getElementById("countries");
                     list.forEach(function(item){
                         var option = document.createElement("option");
@@ -66,14 +76,16 @@ function getListByText(str)
                 response.json().then(function (data) {
                      //console.log(data.items);
                      var list = JSON.parse(data.items);
-                     console.log(list);
-
+                    
                      document.getElementById("res").innerHTML += "<table>";
 
                      fragment = "<table>";
+                    
+                     let cmp = 0;
 
                      for (var key in list) {
                      if (list.hasOwnProperty(key)) {
+                         cmp++;
                          var c = {}
                          c.class_c = list[key].class_c
                          c.family = list[key].family
@@ -92,7 +104,7 @@ function getListByText(str)
 
                          fragment += "<tr style='border: dashed black; border-width: 1px;'>";
                          fragment += "<td width='40%' valign='top'>";
-                         console.log(c.image)
+                         //console.log(c.image)
                          if (c.image != '')
                             fragment += "<img width='250px' src='" + c.image + "'/>";
                          else
@@ -115,8 +127,10 @@ function getListByText(str)
                          fragment += "</tr>";
 
                      }}
+
                      fragment += "</table>";
-                     document.getElementById("res").innerHTML += fragment;                });
+                     document.getElementById("res").innerHTML = "<i>" + cmp.toString() + " résultats</i><br />" + fragment;
+                    });
             }
         )
         .catch(function (err) {
@@ -142,12 +156,15 @@ function getListByTextBegin(str)
                 response.json().then(function (data) {
                      //console.log(data.items);
                      var list = JSON.parse(data.items);
-                     console.log(list);
-
+                     //console.log(list);
+                     
                      fragment = "<table>";
+
+                     let cmp = 0;
 
                      for (var key in list) {
                      if (list.hasOwnProperty(key)) {
+                         cmp++;
                          var c = {}
                          c.class_c = list[key].class_c
                          c.family = list[key].family
@@ -166,7 +183,7 @@ function getListByTextBegin(str)
 
                          fragment += "<tr style='border: dashed black; border-width: 1px;'>";
                          fragment += "<td width='40%' valign='top'>";
-                         console.log(c.image)
+                         //console.log(c.image)
                          if (c.image != '')
                             fragment += "<img width='250px' src='" + c.image + "'/>";
                          else
@@ -189,8 +206,10 @@ function getListByTextBegin(str)
                          fragment += "</tr>";
 
                      }}
+
                      fragment += "</table>";
-                     document.getElementById("res").innerHTML += fragment;                });
+                     document.getElementById("res").innerHTML = "<i>" + cmp.toString() + " résultats</i><br />" + fragment;
+                });
             }
         )
         .catch(function (err) {
@@ -198,9 +217,86 @@ function getListByTextBegin(str)
         });
 }
 
+function getListByDistribution(str)
+{
+    url = 'https://wild-species-okfn-api.herokuapp.com/ByCountryName/' + str
+
+    fetch(url)
+        .then(
+            function (response) {
+                if (response.status !== 200) {
+                    console.log('Oups ' +
+                        response.status);
+                    return;
+                }
+
+                // Examine the text in the response
+                response.json().then(function (data) {
+                     //console.log(data.items);
+                     var list = JSON.parse(data.items);
+                     //console.log(list);
+                     
+                     fragment = "<table>";
+
+                     let cmp = 0;
+
+                     for (var key in list) {
+                     if (list.hasOwnProperty(key)) {
+                         cmp++;
+                         var c = {}
+                         c.class_c = list[key].class_c
+                         c.family = list[key].family
+                         c.wname = list[key].wname
+                         c.scientific_name = list[key].scientific_name
+                         c.image = list[key].image
+                         c.genus = list[key].genus
+                         c.order_c = list[key].order_c
+                         c.phylum = list[key].phylum
+                         c.species = list[key].species
+                         c.subspecies = list[key].subspecies
+
+                         c.citesid = list[key].citesid
+                         c.listing_cites = list[key].listing_cites
+                         c.wikidataid = list[key].wikidataid
+
+                         fragment += "<tr style='border: dashed black; border-width: 1px;'>";
+                         fragment += "<td width='40%' valign='top'>";
+                         //console.log(c.image)
+                         if (c.image != '')
+                            fragment += "<img width='250px' src='" + c.image + "'/>";
+                         else
+                             fragment += "<img src='/okfnfr/Noimage.png'/>";
+
+                         fragment += "</td>";
+
+                         fragment += "<td align='left' width='50%' valign='top'>";
+
+                         fragment += "<h1>" + c.wname + " <i>" + c.scientific_name + "</i></h1>"
+                         fragment +="<br/>Family: " + c.family
+                         fragment +="<br/>Class: " + c.class_c
+                         fragment +="<br/>Genus: " + c.genus
+                         fragment +="<br/>Order: " + c.order_c
+                         fragment +="<br/>Phylum: " + c.phylum
+                         fragment +="<br/>species: " + c.species
+                         fragment +="<br/>CITES: " + c.listing_cites
+                         fragment +="<br/>Wikidata: " + c.wikidataid
+                         fragment += "</td>";
+                         fragment += "</tr>";
+
+                     }}
+
+                     fragment += "</table>";
+                     document.getElementById("res").innerHTML = "<i>" + cmp.toString() + " résultats</i><br />" + fragment;
+                });
+            }
+        )
+        .catch(function (err) {
+            console.log('Fetch Error :-S', err);
+        });
+}
 
 function onLoad()
 {
-    //getcountries();
+    getcountries();
     //getListByText('LION');
 }

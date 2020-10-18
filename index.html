@@ -2,26 +2,25 @@
 
 <head>
     <script src="app.js"></script>
-    <link rel="stylesheet" type="text/css" href="/okfnfr/style.css" />
     <link rel="stylesheet" type="text/css" href="style.css" />
 </head>
 
 <body onload="onLoad()">
-    
+
     <h2>Mémoires d'éléphant</h2>
-    
-    
-<form id="searchform">
-    <h3>Lancer une recherche d'espèce :</h3>
-    <input placeholder="Entrez le nom d'une plante ou d'un animal" size="40" id="search" />
-    <br />
-    <p>Options de recherche : </p>
-    <label for="begin"> qui commence avec</label><input type="radio" id="begin" name="Selection" value="begin" checked>
-    <label for="inclusion">Inclut le terme</label><input type="radio" id="inclusion" name="Selection" value="include"><label for="Distribution">Par pays/région</label><input type="radio" id="distribution" name="Selection" value="distribution">
-    <br />
-    <button type="button" onclick="onTextSearch()">Search</button>
-</form>
-<div style="margin:5px auto; width:50%;" id="res" />
+
+    <form id="searchform">
+        <h3>Lancer une recherche d'espèce :</h3>
+        <input id="search" /><button type="button" onclick="onTextSearch()">Search</button>
+        <br />
+        <label for="begin">Qui commence avec</label><input type="radio" id="begin" name="Selection" value="begin" checked>
+        <label for="inclusion">Inclut le terme</label><input type="radio" id="inclusion" name="Selection" value="include">
+        <br />
+        <label for="Distribution">Par pays/région</label><input type="radio" id="distribution" name="Selection" value="distribution">
+        <select id="countries"></select>
+    </form>
+    <div style="margin:5px auto; width:50%;" id="res" />
+
 </body>
 
 </html>
